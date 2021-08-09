@@ -1,4 +1,4 @@
-<!-- Video von: https://www.youtube.com/watch?v=4deVCNJq3qc -->
+<!-- tutorial video: https://www.youtube.com/watch?v=4deVCNJq3qc -->
 <!DOCTYPE html>
 <html lang="de">
 
@@ -9,11 +9,11 @@
     <title>Hello_Vue</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <style>
-        .red {
+        .base__email__input--red {
             border: 3px solid red;
         }
 
-        .green {
+        .base__email__input--green {
             border: 3px solid green;
         }
     </style>
@@ -21,50 +21,50 @@
 
 <body>
 
-    <div id="base">
+    <div class="base">
 
-        <!-- Test der Module von Vue -->
-        <h1>
+        <!-- VueJS model tests -->
+        <h1 class="base__title">
             : {{ hello }}
         </h1>
 
-        <input v-model="hello">
+        <input class="base__input" v-model="hello">
 
-        <div v-if="hello === 'test'">
-            <p>test zurück!</p>
+        <div class="base__response-1" v-if="hello === 'test'">
+            <p class="base__response-1__text" >test zurück!</p>
         </div>
 
-        <div v-else-if="hello === 'hallo'">
-            <p>Selber Hallo</p>
+        <div class="base__response-2" v-else-if="hello === 'hallo'">
+            <p class="base__response-2__text" >Selber Hallo</p>
         </div>
 
-        <div v-else>
-            <p>teste das Input Feld!</p>
+        <div class="base__response-default" v-else>
+            <p class="base__response-default__text" >teste das Input Feld!</p>
         </div>
 
-        <!-- Wird immer gerendert einfach mit display: none -->
-        <div v-show="hello === 'Ey'">
-            <p>{{ hello }}</p>
+        <!-- is always beeing generated just with display: none -->
+        <div class="base__show" v-show="hello === 'Ey'">
+            <p class="base__show__text" >{{ hello }}</p>
         </div>
 
-        <div>
-            <input v-model="input" :class="[input.includes('@') ? 'green' : 'red']">
-            <button v-on:click="alert_send" :disabled="!input.includes('@')">Click Me!</button>
-            <p v-show="!input.includes('@')">Your E-Mail Adress needs to have an @ in it.</p>
+        <div class="base__email" >
+            <input class="base__email__input" v-model="input" :class="[input.includes('@') ? 'base__email__input--green' : 'base__email__input--red']">
+            <button class="base__email__submit" v-on:click="alert_send" :disabled="!input.includes('@')">Click Me!</button>
+            <p class="base__email__information" v-show="!input.includes('@')">Your E-Mail Adress needs to have an @ in it.</p>
         </div>
 
     </div>
 
     <script>
         new Vue({
-            el: '#base',
+            el: '.base',
             data: {
                 hello: 'Hello Vue',
                 input: ''
             },
             methods: {
-                alert_send: function (event) {
-                    alert("E-Mail sent to: " + this.input)
+                alertSend: function (event) {
+                    alert("email sent to: " + this.input)
                 }
             }
         })
