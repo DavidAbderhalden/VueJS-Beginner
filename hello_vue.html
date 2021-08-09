@@ -68,6 +68,7 @@
             </ul>
         </div>
 
+        <!-- Vue functions with input data -->
         <div class="base__add-person">
             <h3>Neue Person hinzufügen</h3>
             <input class="base__add-person__name" v-model="newName" v-on:keyup.enter="addPerson">
@@ -75,12 +76,26 @@
             <button v-on:click="addPerson" >Hinzufügen</button>
         </div>
 
+        <div class="base__component">
+            <list class="base__component__list" :objects="persons"></list>
+        </div>
+
     </div>
 
 
 
     <script>
-        new Vue({
+        Vue.component('list', {
+            props: ['objects'],
+            template: 
+            `
+                <ul>
+                    <li v-for="object in objects" > {{ object.name }} </li>
+                </ul>
+            `
+        })
+
+        app = new Vue({
             el: '.base',
             data: {
                 hello: 'Hello Vue',
@@ -95,15 +110,30 @@
                     alert("email sent to: " + this.input)
                 },
                 addPerson: function () {
-                    if(!this.newName == '...' && !this.newAge == '...'){
+                    if(this.newName != '...' && this.newAge != '...'){
                         this.persons.push({name: this.newName, age: this.newAge})
                         this.newAge = '...'; this.newName = '...'
+
                     }
                     else{
                         alert("a name and age is required!")
+
                     }
-                }
+                },
             },
+            created: function(){
+                    alert("Welcome to my test applocation!")
+                },
+            mounted: function(){
+                console.log("Application is now ready to use")
+                },
+            updated: function(){
+                console.log("You updated Vue")
+                },
+            destroyed: function(){
+                console.log("VueJS can no longer be used ...")
+                },
+
             computed: {
                 previewPerson: function() {
                     if(this.newName != '...' || this.newAge != '...'){
