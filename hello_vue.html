@@ -49,22 +49,66 @@
 
         <div class="base__email" >
             <input class="base__email__input" v-model="input" :class="[input.includes('@') ? 'base__email__input--green' : 'base__email__input--red']">
-            <button class="base__email__submit" v-on:click="alert_send" :disabled="!input.includes('@')">Click Me!</button>
+            <button class="base__email__submit" v-on:click="alertSend" :disabled="!input.includes('@')">Click Me!</button>
             <p class="base__email__information" v-show="!input.includes('@')">Your E-Mail Adress needs to have an @ in it.</p>
         </div>
 
+        <!-- for loop with list -->
+        <div class="base__names">
+            <ul>
+                <li class="base__names__name" v-for="name in names">{{ name }}</li>
+            </ul>
+        </div>
+
+        <!-- for loop with objects -->
+        <div class="base__persons">
+            <ul>
+                <li class="base__persons__summary" v-for="person in persons">{{ person.name }} ist {{ person.age }} Jahr alt.</li>
+                <li class="base__persons__summary" >{{ previewPerson }}</li>
+            </ul>
+        </div>
+
+        <div class="base__add-person">
+            <h3>Neue Person hinzufügen</h3>
+            <input class="base__add-person__name" v-model="newName" v-on:keyup.enter="addPerson">
+            <input class="base__add-person__age" v-model="newAge" v-on:keyup.enter="addPerson">
+            <button v-on:click="addPerson" >Hinzufügen</button>
+        </div>
+
     </div>
+
+
 
     <script>
         new Vue({
             el: '.base',
             data: {
                 hello: 'Hello Vue',
-                input: ''
+                input: '',
+                names: ['John', 'Alf', 'Freddy', 'Josh', 'Gandalf'],
+                persons: [{name: 'John', age: 18}, {name: 'Alf', age: 230}, {name: 'Freddy', age: 34}, {name: 'Josh', age: 12}, {name: 'Gandalf', age: 2}],
+                newName: '...',
+                newAge: '...'
             },
             methods: {
                 alertSend: function (event) {
                     alert("email sent to: " + this.input)
+                },
+                addPerson: function () {
+                    if(!this.newName == '...' && !this.newAge == '...'){
+                        this.persons.push({name: this.newName, age: this.newAge})
+                        this.newAge = '...'; this.newName = '...'
+                    }
+                    else{
+                        alert("a name and age is required!")
+                    }
+                }
+            },
+            computed: {
+                previewPerson: function() {
+                    if(this.newName != '...' || this.newAge != '...'){
+                        return this.newName + " ist " + this.newAge + " Jahre alt."
+                    }
                 }
             }
         })
