@@ -1,0 +1,75 @@
+<!-- Video von: https://www.youtube.com/watch?v=4deVCNJq3qc -->
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello_Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        .red {
+            border: 3px solid red;
+        }
+
+        .green {
+            border: 3px solid green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="base">
+
+        <!-- Test der Module von Vue -->
+        <h1>
+            : {{ hello }}
+        </h1>
+
+        <input v-model="hello">
+
+        <div v-if="hello === 'test'">
+            <p>test zurück!</p>
+        </div>
+
+        <div v-else-if="hello === 'hallo'">
+            <p>Selber Hallo</p>
+        </div>
+
+        <div v-else>
+            <p>teste das Input Feld!</p>
+        </div>
+
+        <!-- Wird immer gerendert einfach mit display: none -->
+        <div v-show="hello === 'Ey'">
+            <p>{{ hello }}</p>
+        </div>
+
+        <div>
+            <input v-model="input" :class="[input.includes('@') ? 'green' : 'red']">
+            <button v-on:click="alert_send" :disabled="!input.includes('@')">Click Me!</button>
+            <p v-show="!input.includes('@')">Your E-Mail Adress needs to have an @ in it.</p>
+        </div>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#base',
+            data: {
+                hello: 'Hello Vue',
+                input: ''
+            },
+            methods: {
+                alert_send: function (event) {
+                    alert("E-Mail sent to: " + this.input)
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
