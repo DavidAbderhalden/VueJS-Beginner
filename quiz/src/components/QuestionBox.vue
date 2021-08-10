@@ -1,30 +1,45 @@
 <template class="qbox">
   <div class="qbox__wrapper">
-    <h2 class="qbox__wrapper__title">QuestionBox</h2>
+    <h2 class="qbox__wrapper__title">Questions and Answers</h2>
     <table class="qbox__wrapper__table">
       <tr>
-        <th class="qbox__wrapper__table__question">Question</th>
+        <th class="qbox__wrapper__table__question">
+          {{ activeQuestion.question }}
+        </th>
       </tr>
-      <tr>
-        <td class="qbox__wrapper__table__answer">Answer 1</td>
-      </tr>
-      <tr>
-        <td class="qbox__wrapper__table__answer">Answer 2</td>
-      </tr>
-      <tr>
-        <td class="qbox__wrapper__table__answer">Answer 3</td>
-      </tr>
-      <tr>
-        <td class="qbox__wrapper__table__answer">Answer 4</td>
+      <tr v-for="(answer, index) in allAnswers" :key="index">
+        <td class="qbox__wrapper__table__answer">{{ answer }}</td>
       </tr>
     </table>
 
     <div class="qbox__wrapper__footer">
       <button class="qbox__wrapper__footer__button">Submit</button>
-      <button class="qbox__wrapper__footer__button">Next</button>
+      <button class="qbox__wrapper__footer__button" @click="next">Next</button>
     </div>
   </div>
 </template>
+
+
+<script>
+export default {
+  props: {
+    activeQuestion: Object,
+    next: Function,
+  },
+  data() {
+    return {
+      answers: [],
+    };
+  },
+  computed: {
+    allAnswers() {
+      let answers = [...this.activeQuestion.incorrect_answers];
+      answers.push(this.activeQuestion.correct_answer);
+      return answers;
+    },
+  },
+};
+</script>
 
 
 <style>
@@ -37,39 +52,48 @@
   background-color: rgb(238, 238, 238);
   padding-bottom: 50px;
 }
-
+.qbox__wrapper__title {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
 
 .qbox__wrapper__table {
-  width: 50%;
-  border-spacing: 20px;
+  width: 70%;
+  border-spacing: 15px;
   margin-bottom: 20px;
 }
 
 .qbox__wrapper__table__question {
-  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: rgb(112, 112, 112);
+  font-weight: normal;
+  height: 70px;
+  padding: 10px 10px 20px 10px;
   font-size: 20px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgb(160, 160, 160);
 }
 
 .qbox__wrapper__table__answer {
-  padding: 8px;
+  padding: 15px;
+  border: 1px solid rgb(201, 201, 201);
 }
 
-
-.qbox__wrapper__footer{
-    display: flex;
-    justify-content: space-between;
-    width: 25%;
+.qbox__wrapper__footer {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
 }
 
-.qbox__wrapper__footer__button{
-    height: 30px;
-    width: 90px;
-    background-color: rgba(255, 181, 112, 0.986);
-    border: 1px solid rgb(190, 190, 190);
+.qbox__wrapper__footer__button {
+  height: 30px;
+  width: 90px;
+  background-color: rgba(255, 181, 112, 0.986);
+  border: 1px solid rgb(190, 190, 190);
 }
 
-.qbox__wrapper__footer__button:hover{
-    background-color: rgba(255, 157, 65, 0.986);
+.qbox__wrapper__footer__button:hover {
+  background-color: rgba(255, 157, 65, 0.986);
 }
 </style>
