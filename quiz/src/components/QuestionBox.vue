@@ -8,7 +8,7 @@
         </th>
       </tr>
       <tr
-        v-for="(answer, index) in allAnswers"
+        v-for="(answer, index) in shuffledAnswers"
         :key="index"
         @click.prevent="selectIndex(index)"
         :class="[selectedIndex === index ? 'qbox__wrapper__table__answer--selected' : '']"
@@ -18,30 +18,39 @@
     </table>
 
     <div class="qbox__wrapper__footer">
-      <button class="qbox__wrapper__footer__button">Submit</button>
-      <button class="qbox__wrapper__footer__button" @click="next">Next</button>
+      <button class="qbox__wrapper__footer__button" @click="checkAnswer" :class="[submitted ? 'qbox__wrapper__footer__button--disabled' : '']">Submit</button>
+      <button class="qbox__wrapper__footer__button" :disabled="!submitted" @click="getNextQuestion">Next</button>
     </div>
   </div>
 </template>
 
 
 <script>
+import _ from 'lodash'
 export default {
   props: {
     activeQuestion: Object,
     next: Function,
+    add: Function,
+    addTotal: Function
   },
   data() {
     return {
-      answers: [],
+      shuffledAnswers: [],
       selectedIndex: null,
+      correct: false,
+      submitted: false,
     };
   },
 
+  // Variables can be parsed to the watch function. It will react as soon as they update. 
   watch: {
-    activeQuestion() {
-      this.resetSelected()
-      this.shuffleAnswers()
+    activeQuestion: {
+      immediate: true,           // Immediate is also running the function on creation.
+      handler(){
+        this.resetSelected()
+        this.shuffleAnswers()
+      }
     }
   },
 
@@ -55,18 +64,35 @@ export default {
     },
 
     shuffleAnswers() {
-      
+      let answers = [...this.activeQuestion.incorrect_answers, this.activeQuestion.correct_answer];
+      this.shuffledAnswers = _.shuffle(answers)
+    },
+    checkAnswer() {
+      if(!this.submitted) {
+        this.addTotal()
+        this.submitted = true
+        let correctIndex = this.shuffledAnswers.indexOf(this.activeQuestion.correct_answer)
+        if(this.selectedIndex == correctIndex) {
+          this.correct = true
+          this.add()
+        }
+      }
+    },
+    getNextQuestion() {
+      this.submitted = false
+      this.correct = false
+      this.next()
     }
   },
 
   computed: {
-    allAnswers() {
+    /*allAnswers() {
       let answers = [...this.activeQuestion.incorrect_answers];
       answers.push(this.activeQuestion.correct_answer);
       return answers;
-    },
+    },*/
   },
-};
+}
 </script>
 
 
@@ -145,4 +171,15 @@ export default {
   border: 2px solid rgb(37, 37, 37);
   cursor: pointer;
 }
+
+.qbox__wrapper__footer__button--disabled {
+  background-color: rgb(221, 221, 221);
+}
+
+.qbox__wrapper__footer__button--disabled:hover {
+  background-color: rgb(221, 221, 221);
+  border: 1px solid rgb(190, 190, 190);
+  cursor: unset;
+}
+
 </style>

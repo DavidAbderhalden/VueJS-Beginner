@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <Header class="app__header" />
+    <Header class="app__header" 
+      :score="score"
+      :total="total"
+    />
     <QuestionBox
       class="app__qbox"
+      :add="addScore"
+      :addTotal="addTotal"
       v-if="questions.length"
       :activeQuestion="questions[i]"
       :next="nextQuestion"
@@ -24,6 +29,8 @@ export default {
     return {
       questions: [],
       i: 0,
+      score: 0,
+      total: 0
     };
   },
 
@@ -31,6 +38,13 @@ export default {
     nextQuestion() {
       this.i++;
     },
+    addScore() {
+      this.score++;
+      console.log(this.score)
+    },
+    addTotal(){
+      this.total++;
+    }
   },
 
   mounted: function () {

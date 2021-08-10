@@ -1,10 +1,18 @@
 <template class="header">
     <nav class="header__nav">
         <h2 class="header__nav__title" >Quiz</h2>
-        <p class="header__nav__score" >Correct: 5/5</p>
+        <p class="header__nav__score" >Correct: {{ score }}/{{ total }}</p>
     </nav>
 </template>
 
+<script>
+export default {
+  props: {
+    score: Number,
+    total: Number
+  },
+}
+</script>
 
 <style>
 .header__nav {
