@@ -11,15 +11,21 @@
         v-for="(answer, index) in shuffledAnswers"
         :key="index"
         @click.prevent="selectIndex(index)"
-        :class="[selectedIndex === index ? 'qbox__wrapper__table__answer--selected' : '']"
+        :class="{
+          'qbox__wrapper__table__answer--locked' : submitted,
+          'qbox__wrapper__table__answer--correct' : correctIndex === index && submitted,
+          'qbox__wrapper__table__answer--wrong' : selectedIndex === index && submitted && selectedIndex !== correctIndex,
+          'qbox__wrapper__table__answer--selected' : selectedIndex === index && !submitted,
+          }"
+ 
       >
         <td class="qbox__wrapper__table__answer">{{ answer }}</td>
       </tr>
     </table>
 
     <div class="qbox__wrapper__footer">
-      <button class="qbox__wrapper__footer__button" @click="checkAnswer" :class="[submitted ? 'qbox__wrapper__footer__button--disabled' : '']">Submit</button>
-      <button class="qbox__wrapper__footer__button" :disabled="!submitted" @click="getNextQuestion">Next</button>
+      <button class="qbox__wrapper__footer__button" :disabled="submitted || selectedIndex === null" @click="checkAnswer" :class="[submitted || selectedIndex === null ? 'qbox__wrapper__footer__button--disabled' : '']">Submit</button>
+      <button class="qbox__wrapper__footer__button" :disabled="!submitted" @click="getNextQuestion" :class="[!submitted ? 'qbox__wrapper__footer__button--disabled' : '']">Next</button>
     </div>
   </div>
 </template>
@@ -40,6 +46,7 @@ export default {
       selectedIndex: null,
       correct: false,
       submitted: false,
+      correctIndex: null
     };
   },
 
@@ -60,7 +67,10 @@ export default {
     },
 
     selectIndex(index) {
-      this.selectedIndex = index;
+      if(!this.submitted){
+              this.selectedIndex = index;
+      }
+
     },
 
     shuffleAnswers() {
@@ -68,14 +78,13 @@ export default {
       this.shuffledAnswers = _.shuffle(answers)
     },
     checkAnswer() {
-      if(!this.submitted) {
-        this.addTotal()
-        this.submitted = true
-        let correctIndex = this.shuffledAnswers.indexOf(this.activeQuestion.correct_answer)
-        if(this.selectedIndex == correctIndex) {
-          this.correct = true
-          this.add()
-        }
+      this.addTotal()
+      this.submitted = true
+      this.correctIndex = this.shuffledAnswers.indexOf(this.activeQuestion.correct_answer)
+      if(this.selectedIndex == this.correctIndex) {
+        this.correct = true
+        this.add()
+      /*this.selectedIndex == null*/
       }
     },
     getNextQuestion() {
@@ -148,6 +157,22 @@ export default {
   outline: 1px solid rgb(163, 163, 163);
   background-color: rgba(255, 181, 112, 0.986);
 
+}
+
+.qbox__wrapper__table__answer--locked:hover .qbox__wrapper__table__answer{
+  outline: var(--background);
+  background-color: var(--background);
+  cursor: unset;
+}
+
+.qbox__wrapper__table__answer--correct{
+  background-color: rgba(134, 230, 134, 0.438);
+  outline: 1px solid rgb(0, 163, 0);
+}
+
+.qbox__wrapper__table__answer--wrong{
+  background-color: rgba(228, 91, 81, 0.438);
+  outline: 1px solid rgba(146, 53, 29, 0.856);
 }
 
 .qbox__wrapper__footer {
