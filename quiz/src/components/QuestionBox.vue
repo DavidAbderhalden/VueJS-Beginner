@@ -7,7 +7,12 @@
           {{ activeQuestion.question }}
         </th>
       </tr>
-      <tr v-for="(answer, index) in allAnswers" :key="index">
+      <tr
+        v-for="(answer, index) in allAnswers"
+        :key="index"
+        @click.prevent="selectIndex(index)"
+        :class="[selectedIndex === index ? 'qbox__wrapper__table__answer--selected' : '']"
+      >
         <td class="qbox__wrapper__table__answer">{{ answer }}</td>
       </tr>
     </table>
@@ -29,8 +34,31 @@ export default {
   data() {
     return {
       answers: [],
+      selectedIndex: null,
     };
   },
+
+  watch: {
+    activeQuestion() {
+      this.resetSelected()
+      this.shuffleAnswers()
+    }
+  },
+
+  methods: {
+    resetSelected(){
+      this.selectedIndex = null;
+    },
+
+    selectIndex(index) {
+      this.selectedIndex = index;
+    },
+
+    shuffleAnswers() {
+      
+    }
+  },
+
   computed: {
     allAnswers() {
       let answers = [...this.activeQuestion.incorrect_answers];
@@ -43,7 +71,12 @@ export default {
 
 
 <style>
+.qbox {
+  --background: rgb(224, 224, 224);
+}
+
 .qbox__wrapper {
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,23 +110,39 @@ export default {
 
 .qbox__wrapper__table__answer {
   padding: 15px;
-  border: 1px solid rgb(201, 201, 201);
+  border: 1px solid var(--background);
+}
+
+.qbox__wrapper__table__answer:hover {
+  outline: 1px solid rgb(163, 163, 163);
+  background-color: rgba(0, 0, 0, 0.096);
+  cursor: pointer;
+}
+.qbox__wrapper__table__answer--selected {
+  outline: 1px solid rgb(163, 163, 163);
+  background-color: rgba(255, 181, 112, 0.986);
+
 }
 
 .qbox__wrapper__footer {
   display: flex;
   justify-content: space-between;
-  width: 25%;
+  width: 35%;
 }
 
 .qbox__wrapper__footer__button {
-  height: 30px;
-  width: 90px;
+  font-size: 16px;
+  color: rgb(48, 48, 48);
+  height: 40px;
+  width: 120px;
   background-color: rgba(255, 181, 112, 0.986);
   border: 1px solid rgb(190, 190, 190);
+  border-radius: 4px;
 }
 
 .qbox__wrapper__footer__button:hover {
   background-color: rgba(255, 157, 65, 0.986);
+  border: 2px solid rgb(37, 37, 37);
+  cursor: pointer;
 }
 </style>
