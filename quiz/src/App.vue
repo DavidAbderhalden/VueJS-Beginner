@@ -3,6 +3,8 @@
     <Header class="app__header" 
       :score="score"
       :total="total"
+      v-if="questions.length"
+      :activeQuestion="questions[i]"
     />
     <QuestionBox
       class="app__qbox"
@@ -49,7 +51,8 @@ export default {
 
   mounted: function () {
     fetch(
-      "https://opentdb.com/api.php?amount=10&difficulty=medium&type=multiple",
+      /*"https://opentdb.com/api.php?amount=10&difficulty=medium&type=multiple"*/
+      "https://opentdb.com/api.php?amount=10&type=multiple",
       { method: "get" }
     )
       .then((response) => {
