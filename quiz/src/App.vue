@@ -1,4 +1,5 @@
 <template>
+  <h1>{{ test }}</h1>
   <div id="app">
     <Header class="app__header" 
       :score="answerScore"
@@ -22,18 +23,26 @@ import Header from "./components/Header.vue";
 import QuestionBox from "./components/QuestionBox.vue";
 
 export default {
+
   name: "App",
   components: {
     Header,
     QuestionBox,
   },
+
   data() {
     return {
       questions: [],
       questionIndex: 0,
       answerScore: 0,
-      answerTotal: 0
+      answerTotal: 0,
     };
+  },
+
+  computed: {
+    test() {
+      return this.$store.state.test
+    }
   },
 
   methods: {
