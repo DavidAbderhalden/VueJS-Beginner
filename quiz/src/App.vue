@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <Header class="app__header" 
-      :score="score"
-      :total="total"
+      :score="answerScore"
+      :total="answerTotal"
       v-if="questions.length"
-      :activeQuestion="questions[i]"
+      :activeQuestion="questions[questionIndex]"
     />
     <QuestionBox
       class="app__qbox"
-      :add="addScore"
-      :addTotal="addTotal"
+      :addToScore="addScore"
+      :addToTotal="addTotal"
       v-if="questions.length"
-      :activeQuestion="questions[i]"
+      :activeQuestion="questions[questionIndex]"
       :next="nextQuestion"
     />
   </div>
@@ -30,28 +30,27 @@ export default {
   data() {
     return {
       questions: [],
-      i: 0,
-      score: 0,
-      total: 0
+      questionIndex: 0,
+      answerScore: 0,
+      answerTotal: 0
     };
   },
 
   methods: {
     nextQuestion() {
-      this.i++;
+      this.questionIndex++;
     },
     addScore() {
-      this.score++;
-      console.log(this.score)
+      this.answerScore++;
+      console.log(this.answerScore)
     },
     addTotal(){
-      this.total++;
+      this.answerTotal++;
     }
   },
 
   mounted: function () {
     fetch(
-      /*"https://opentdb.com/api.php?amount=10&difficulty=medium&type=multiple"*/
       "https://opentdb.com/api.php?amount=10&type=multiple",
       { method: "get" }
     )
@@ -66,14 +65,5 @@ export default {
 </script>
 
 <style>
-#app {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import "assets/style/App.css";
 </style>

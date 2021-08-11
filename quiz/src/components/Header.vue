@@ -26,30 +26,5 @@ export default {
 </script>
 
 <style>
-.header__nav {
-  width: 60%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-bottom: 1px solid gray;
-}
-.header__nav__score {
-  padding: 0px;
-}
-
-.header__nav__difficulty{
-  font-size: 18px;
-}
-
-.header__nav__difficulty--easy{
-  color: green;
-} 
-
-.header__nav__difficulty--medium{
-  color: orange;
-} 
-
-.header__nav__difficulty--hard{
-  color: red;
-} 
+  @import "../assets/style/Header.css";
 </style>

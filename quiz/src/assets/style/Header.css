@@ -1,0 +1,34 @@
+:root{
+  /* css variables: color variables */
+  --border-color: gray;
+  --easy-question-color: green;
+  --medium-question-color: orange;
+  --hard-question-color: red;
+}
+
+.header__nav {
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .header__nav__score {
+    padding: 0px;
+  }
+  
+  .header__nav__difficulty{
+    font-size: 18px;
+  }
+  
+  .header__nav__difficulty--easy{
+    color: var(--easy-question-color);
+  } 
+  
+  .header__nav__difficulty--medium{
+    color: var(--medium-question-color);
+  } 
+  
+  .header__nav__difficulty--hard{
+    color: var(--hard-question-color);
+  } 
