@@ -24,7 +24,7 @@
     width: 50%;
     margin-top: 35px;
     background-color: var(--background);
-    padding-bottom: 50px;
+    padding-bottom: 20px;
   }
   .qbox__wrapper__title {
     margin-bottom: 0px;
@@ -32,8 +32,8 @@
   }
   
   .qbox__wrapper__table {
-    width: 70%;
-    border-spacing: 15px;
+    width: 80%;
+    border-spacing: 5px;
     margin-bottom: 20px;
   }
   
@@ -44,8 +44,8 @@
     color: var(--font-color-title-1);
     font-weight: normal;
     height: 70px;
-    max-width: 100%;
-    padding: 10px 10px 20px 10px;
+    width: 100%;
+    padding: 5px 5px 5px 5px;
     font-size: 20px;
     border-bottom: 1px solid var(--border-color);
     word-wrap: break-word;
@@ -93,14 +93,14 @@
   .qbox__wrapper__footer {
     display: flex;
     justify-content: space-between;
-    width: 35%;
+    width: 50%;
   }
   
   .qbox__wrapper__footer__button {
     font-size: 16px;
     color: var(--font-color-button-1);
-    height: 40px;
-    width: 120px;
+    height: 30px;
+    width: 100px;
     background-color: var(--orangne-light);
     border: 1px solid var(--border-color);
     border-radius: 4px;

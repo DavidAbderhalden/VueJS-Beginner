@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ test }}</h1>
+  <!--h1>{{ test }}</h1-->
   <div id="app">
     <Header class="app__header" 
       :score="answerScore"

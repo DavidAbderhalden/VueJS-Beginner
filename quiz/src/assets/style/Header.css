@@ -20,6 +20,13 @@
   .header__nav__difficulty{
     font-size: 18px;
   }
+
+  .difficilty__title{
+    font-size: 16px;
+    font-weight: normal;
+    text-decoration: none;
+    color: rgb(112, 112, 112);
+  }
   
   .header__nav__difficulty--easy{
     color: var(--easy-question-color);

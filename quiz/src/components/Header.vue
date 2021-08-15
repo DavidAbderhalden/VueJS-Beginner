@@ -9,7 +9,7 @@
         'header__nav__difficulty--hard': activeQuestion.difficulty == 'hard',
       }"
     >
-      {{ activeQuestion.difficulty }}
+      <strong class="difficilty__title">Schwierigkeitsgrad: </strong>{{ activeQuestion.difficulty }}
     </p>
     <p class="header__nav__score">Correct: {{ score }}/{{ total }}</p>
   </nav>
